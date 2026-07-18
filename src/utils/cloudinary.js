@@ -27,7 +27,7 @@ const uploadFileOnCloudinary = async (filePath) => {
     }
     catch(err) {
         console.error('Error uploading file to Cloudinary:', err);
-        console.log("Cloudinary Config:", cloudinary.config());
+        // console.log("Cloudinary Config:", cloudinary.config());
         fs.unlinkSync(filePath); // Ensure the file is deleted from local storage even if upload fails
         return null;
     }
@@ -35,4 +35,17 @@ const uploadFileOnCloudinary = async (filePath) => {
     
 }
 
-export { uploadFileOnCloudinary } ;
+const deleteFileFromCloudinary = async (fileUrl) => {
+  try {
+    if (!fileUrl) return null;
+    // extract public_id from the URL (the part after last '/' and before file extension)
+    const publicId = fileUrl.split("/").pop().split(".")[0];
+    const response = await cloudinary.uploader.destroy(publicId);
+    return response;
+  } catch (error) {
+    console.log("Error deleting file from cloudinary", error);
+    return null;
+  }
+};
+
+export { uploadFileOnCloudinary, deleteFileFromCloudinary };

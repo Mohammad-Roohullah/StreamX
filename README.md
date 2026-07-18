@@ -6,44 +6,35 @@ A modern video streaming platform built with scalability, clean architecture, an
 
 > **Status:** 🚧 Currently in Development
 
-## Phase 2 Progress Update
+## Phase 3 Progress Update
 
-### 🔐 Authentication System Completed
+#### 🎥 Video Module
+Implemented the core video management functionality, including:
 
-Implemented a complete authentication flow with secure user management:
+- 📤 Publish a new video with thumbnail upload
+- 📺 Fetch video details by ID
+- ✏️ Update video information and thumbnail
+- 🗑️ Delete uploaded videos
+- 🔄 Toggle video publish/unpublish status
+- 🔐 Protected all video routes using JWT authentication
 
-- ✅ User registration with avatar upload
-- ✅ User login system
-- ✅ Logout functionality
-- ✅ Refresh token mechanism
-- ✅ JWT-based authentication
-- ✅ Protected route middleware
+#### 👤 User Profile Management
+Added authenticated profile management features, including:
 
-### ☁️ File Upload Infrastructure
+- 🙋 Get current logged-in user
+- 📝 Update account details
+- 🔑 Change account password
+- 🖼️ Update user avatar
+- 🌄 Update user cover image
+- 🔐 Secured all profile management routes with JWT authentication
 
-Added the foundation for media handling:
+### Current Status
 
-- ✅ Integrated Multer for handling multipart/form-data
-- ✅ Integrated Cloudinary for cloud image storage
-- ✅ Added automatic local file cleanup after upload
-
-### 🏗️ Backend Improvements
-
-Improved project structure and resolved important backend issues:
-
-- ✅ Separated environment configuration into an early-loading setup file
-- ✅ Fixed Mongoose pre-save middleware compatibility issue
-- ✅ Resolved `fullName` schema naming mismatch
-- ✅ Improved authentication flow reliability
-- ✅ Verified complete register → login → refresh token workflow
-
-### ✅ Current Status
-
-Phase 2 is successfully completed and all implemented features are working correctly
+Phase 3 is successfully completed and all implemented features are working correctly
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ```bash
 # Clone the repository

@@ -37,11 +37,15 @@ const register = asyncHandler(async (req, res) => {
     }
 
     const avatarLocalPath = req.files?.avatar?.[0]?.path;
+    const coverImageLocalPath = req.files?.coverImage?.[0]?.path;
+    
     if (!avatarLocalPath) {
         throw new ApiError(400, "Avatar file is required");
     }
-
+   
     const avatar = await uploadFileOnCloudinary(avatarLocalPath);
+    const coverImage = coverImageLocalPath ? await uploadFileOnCloudinary(coverImageLocalPath) : null;
+
     if (!avatar) {
         throw new ApiError(400, "Avatar upload failed");
     }
@@ -52,6 +56,7 @@ const register = asyncHandler(async (req, res) => {
         fullName,
         password,
         avatar: avatar.url,
+        coverImage: coverImage?.url || ""
     });
 
     // re-fetch without sensitive fields rather than trusting the in-memory object
