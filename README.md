@@ -6,31 +6,38 @@ A modern video streaming platform built with scalability, clean architecture, an
 
 > **Status:** 🚧 Currently in Development
 
-## Phase 3 Progress Update
+## Phase 4 Progress Update
 
-#### 🎥 Video Module
-Implemented the core video management functionality, including:
+#### 💬 Tweet Module
+Implemented tweet management functionality, including:
 
-- 📤 Publish a new video with thumbnail upload
-- 📺 Fetch video details by ID
-- ✏️ Update video information and thumbnail
-- 🗑️ Delete uploaded videos
-- 🔄 Toggle video publish/unpublish status
-- 🔐 Protected all video routes using JWT authentication
+- 📝 Create a new tweet
+- 👤 Fetch all tweets by a specific user
+- ✏️ Update an existing tweet
+- 🗑️ Delete a tweet
+- 🛡️ Ownership validation for updating and deleting tweets
 
-#### 👤 User Profile Management
-Added authenticated profile management features, including:
+#### 💭 Comment Module
+Added video comment functionality, including:
 
-- 🙋 Get current logged-in user
-- 📝 Update account details
-- 🔑 Change account password
-- 🖼️ Update user avatar
-- 🌄 Update user cover image
-- 🔐 Secured all profile management routes with JWT authentication
+- 💬 Add comments to videos
+- 📄 Fetch paginated comments for a video
+- ✏️ Update existing comments
+- 🗑️ Delete comments
+- ❤️ Return like count and liked status for each comment
+- 👤 Populate comment owner details
+
+#### ❤️ Like Module
+Implemented the like system, including:
+
+- 👍 Like/Unlike videos
+- 💬 Like/Unlike comments
+- 📝 Like/Unlike tweets
+- 📺 Fetch all videos liked by the user
 
 ### Current Status
 
-Phase 3 is successfully completed and all implemented features are working correctly
+Phase 4 is successfully completed and all implemented features are working correctly
 
 ---
 
