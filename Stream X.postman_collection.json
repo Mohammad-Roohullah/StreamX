@@ -1,0 +1,722 @@
+{
+  "info": {
+    "_postman_id": "2a999e83-4054-4bc9-b95b-5429036d8d19",
+    "name": "Stream X",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52894556",
+    "_collection_link": "https://go.postman.co/collection/52894556-2a999e83-4054-4bc9-b95b-5429036d8d19?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "username",
+                  "value": "ali",
+                  "type": "text",
+                  "uuid": "e107dc5c-5b8c-4eaf-8553-7841887709cf"
+                },
+                {
+                  "key": "email",
+                  "value": "ali@gmail.com",
+                  "type": "text",
+                  "uuid": "de6a6902-cbd3-407c-a2bb-b80d2385b10b"
+                },
+                {
+                  "key": "fullName",
+                  "value": "mohammadrooohullah",
+                  "type": "text",
+                  "uuid": "697fb4ce-9887-41e1-9e99-baa2bd5f0057"
+                },
+                {
+                  "key": "password",
+                  "value": "123",
+                  "type": "text",
+                  "uuid": "2f2a0e34-1589-4a1e-a980-349230bbdf84"
+                },
+                {
+                  "key": "avatar",
+                  "type": "file",
+                  "uuid": "18fdd855-3b10-4d9b-b1b0-0a5b979356bb",
+                  "src": "/C:/Users/Roohullah/Pictures/Screenshots/Screenshot 2026-01-17 154118.png"
+                },
+                {
+                  "key": "coverImage",
+                  "type": "file",
+                  "uuid": "76a71d0e-b30d-49d8-b23a-3241d26b3785",
+                  "value": null,
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{url}}/api/v1/auth/register",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    // \"username\": \"test\",\r\n    // \"email\": \"test@gmail.com\",\r\n    // \"password\": \"123\"\r\n    \"username\": \"ali\",\r\n    \"email\": \"ali@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/api/v1/auth/login",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer ",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"test01\",\r\n    \"email\": \"test@gmail.com\",\r\n    \"password\": \"testpass\"\r\n}"
+            },
+            "url": {
+              "raw": "{{url}}/api/v1/auth/logout",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "refresh token",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTU3NWZhODIyM2IyY2NmYzM3NmM5OWEiLCJpYXQiOjE3ODQxMTE3ODAsImV4cCI6MTc4NDgwMjk4MH0.OAvcf7v_n46nE_753SDfknpgnF8TyQA1K9G1Z96SGn8\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/api/v1/auth/refresh-token",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "refresh-token"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "item": []
+    },
+    {
+      "name": "Videos",
+      "item": [
+        {
+          "name": "publish video",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer ",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "videoFile",
+                  "type": "file",
+                  "uuid": "2c54d859-de2d-4a40-bcf8-e88753c6565f",
+                  "src": "/C:/Users/Roohullah/Downloads/ai cat/abondended characters/6.mp4"
+                },
+                {
+                  "key": "thumbnail",
+                  "type": "file",
+                  "uuid": "d82569e2-5124-4139-a8be-47a2e5825113",
+                  "src": "/C:/Users/Roohullah/Pictures/Screenshots/Screenshot 2025-12-24 220818.png"
+                },
+                {
+                  "key": "title",
+                  "value": "abondoned ai",
+                  "type": "text",
+                  "uuid": "e8f2b22e-55f4-4265-99b7-4f8330dda46b"
+                },
+                {
+                  "key": "description",
+                  "value": "ai made videos",
+                  "type": "text",
+                  "uuid": "7a9024ba-7c40-4417-9422-33c65bfa7947"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{url}}/api/v1/videos/",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "videos",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get video by id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTU3NWZhODIyM2IyY2NmYzM3NmM5OWEiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNzg0MzUzMDMwLCJleHAiOjE3ODQ0Mzk0MzB9.7CvfX6G40yVdJaT8wSrruTc7LwOBIyOlm7H91CZ8RHU\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/api/v1/videos/6a5763656331f3208e1e80cb",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "videos",
+                "6a5763656331f3208e1e80cb"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update video by id",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/api/v1/videos/6a5763656331f3208e1e80cb",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "videos",
+                "6a5763656331f3208e1e80cb"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tweet",
+      "item": [
+        {
+          "name": "get tweets by userid",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTU3NWZhODIyM2IyY2NmYzM3NmM5OWEiLCJpYXQiOjE3ODQxMTE3ODAsImV4cCI6MTc4NDgwMjk4MH0.OAvcf7v_n46nE_753SDfknpgnF8TyQA1K9G1Z96SGn8\"\r\n}"
+            },
+            "url": {
+              "raw": "{{url}}/api/v1/tweets/user/6a5c400c2e5c392fe4f8d868",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tweets",
+                "user",
+                "6a5c400c2e5c392fe4f8d868"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "post tweet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTVjNDAwYzJlNWMzOTJmZTRmOGQ4NjgiLCJlbWFpbCI6ImFsaUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImFsaSIsImlhdCI6MTc4NDQzMDc5NywiZXhwIjoxNzg0NTE3MTk3fQ.gSNevo5z4myPAF8w_pZ9HsCc39mKoEkY0-iXMYDUV1w",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"content\": \"test tweet by ali\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/api/v1/tweets/",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tweets",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Comment",
+      "item": [
+        {
+          "name": "get comments on a video",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTVjNDAwYzJlNWMzOTJmZTRmOGQ4NjgiLCJlbWFpbCI6ImFsaUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImFsaSIsImlhdCI6MTc4NDQzMDc5NywiZXhwIjoxNzg0NTE3MTk3fQ.gSNevo5z4myPAF8w_pZ9HsCc39mKoEkY0-iXMYDUV1w",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/api/v1/comments/6a5763656331f3208e1e80cb",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "comments",
+                "6a5763656331f3208e1e80cb"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add comment on video",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTVjNDAwYzJlNWMzOTJmZTRmOGQ4NjgiLCJlbWFpbCI6ImFsaUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImFsaSIsImlhdCI6MTc4NDQzMDc5NywiZXhwIjoxNzg0NTE3MTk3fQ.gSNevo5z4myPAF8w_pZ9HsCc39mKoEkY0-iXMYDUV1w",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"content\": \"tes first comment by ali on video of test\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/api/v1/comments/6a5763656331f3208e1e80cb",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "comments",
+                "6a5763656331f3208e1e80cb"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Likes",
+      "item": [
+        {
+          "name": "toggle like on comment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTVjNDAwYzJlNWMzOTJmZTRmOGQ4NjgiLCJlbWFpbCI6ImFsaUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImFsaSIsImlhdCI6MTc4NDQzMDc5NywiZXhwIjoxNzg0NTE3MTk3fQ.gSNevo5z4myPAF8w_pZ9HsCc39mKoEkY0-iXMYDUV1w",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"content\": \"test tweet by ali\"\r\n}"
+            },
+            "url": {
+              "raw": "{{url}}/api/v1/likes/toggle/c/6a5c468bf111494c2f5e4cb2",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "likes",
+                "toggle",
+                "c",
+                "6a5c468bf111494c2f5e4cb2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "toggle like on video",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTVjNDAwYzJlNWMzOTJmZTRmOGQ4NjgiLCJlbWFpbCI6ImFsaUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImFsaSIsImlhdCI6MTc4NDQzMDc5NywiZXhwIjoxNzg0NTE3MTk3fQ.gSNevo5z4myPAF8w_pZ9HsCc39mKoEkY0-iXMYDUV1w",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"content\": \"test tweet by ali\"\r\n}"
+            },
+            "url": {
+              "raw": "{{url}}/api/v1/likes/toggle/v/6a5763656331f3208e1e80cb",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "likes",
+                "toggle",
+                "v",
+                "6a5763656331f3208e1e80cb"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "toggle like on tweet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTVjNDAwYzJlNWMzOTJmZTRmOGQ4NjgiLCJlbWFpbCI6ImFsaUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImFsaSIsImlhdCI6MTc4NDQzMDc5NywiZXhwIjoxNzg0NTE3MTk3fQ.gSNevo5z4myPAF8w_pZ9HsCc39mKoEkY0-iXMYDUV1w",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"content\": \"test tweet by ali\"\r\n}"
+            },
+            "url": {
+              "raw": "{{url}}/api/v1/likes/toggle/t/6a5c423c2e5c392fe4f8d869",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "likes",
+                "toggle",
+                "t",
+                "6a5c423c2e5c392fe4f8d869"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Playlist",
+      "item": [
+        {
+          "name": "create playlist",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTVjNDAwYzJlNWMzOTJmZTRmOGQ4NjgiLCJlbWFpbCI6ImFsaUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImFsaSIsImlhdCI6MTc4NDQzMDc5NywiZXhwIjoxNzg0NTE3MTk3fQ.gSNevo5z4myPAF8w_pZ9HsCc39mKoEkY0-iXMYDUV1w",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"calculas\",\r\n  \"description\": \"all topics\" \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/api/v1/playlists/",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "playlists",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get playlist",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTVjNDAwYzJlNWMzOTJmZTRmOGQ4NjgiLCJlbWFpbCI6ImFsaUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImFsaSIsImlhdCI6MTc4NDQzMDc5NywiZXhwIjoxNzg0NTE3MTk3fQ.gSNevo5z4myPAF8w_pZ9HsCc39mKoEkY0-iXMYDUV1w",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"manqabats\",\r\n  \"description\": \"mir bhai, nadeem bhai etc\" \r\n}"
+            },
+            "url": {
+              "raw": "{{url}}/api/v1/playlists/",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "playlists",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get playlist by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/api/v1/playlists/6a640ca9b6b797493ac65534",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "playlists",
+                "6a640ca9b6b797493ac65534"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update playlist by id",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/api/v1/playlists/6a640ca9b6b797493ac65534",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "playlists",
+                "6a640ca9b6b797493ac65534"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete playlist by id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/api/v1/playlists/6a640ca9b6b797493ac65534",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "playlists",
+                "6a640ca9b6b797493ac65534"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add video in playlist",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTVjNDAwYzJlNWMzOTJmZTRmOGQ4NjgiLCJlbWFpbCI6ImFsaUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImFsaSIsImlhdCI6MTc4NDQzMDc5NywiZXhwIjoxNzg0NTE3MTk3fQ.gSNevo5z4myPAF8w_pZ9HsCc39mKoEkY0-iXMYDUV1w",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"manqabats\",\r\n  \"description\": \"mir bhai, nadeem bhai etc\" \r\n}"
+            },
+            "url": {
+              "raw": "{{url}}/api/v1/playlists/add/6a5763656331f3208e1e80cb/6a640d33b6b797493ac65535",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "playlists",
+                "add",
+                "6a5763656331f3208e1e80cb",
+                "6a640d33b6b797493ac65535"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "remove video from playlist",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTVjNDAwYzJlNWMzOTJmZTRmOGQ4NjgiLCJlbWFpbCI6ImFsaUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImFsaSIsImlhdCI6MTc4NDQzMDc5NywiZXhwIjoxNzg0NTE3MTk3fQ.gSNevo5z4myPAF8w_pZ9HsCc39mKoEkY0-iXMYDUV1w",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"manqabats\",\r\n  \"description\": \"mir bhai, nadeem bhai etc\" \r\n}"
+            },
+            "url": {
+              "raw": "{{url}}/api/v1/playlists/remove/6a5763656331f3208e1e80cb/6a640d33b6b797493ac65535",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "playlists",
+                "remove",
+                "6a5763656331f3208e1e80cb",
+                "6a640d33b6b797493ac65535"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

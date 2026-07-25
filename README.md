@@ -18,6 +18,7 @@ Implemented playlist management functionality, including:
 - ➖ Remove videos from a playlist
 - ✏️ Update playlist name and description
 - 🗑️ Delete a playlist
+- 🛡️ Ownership validation for viewing, updating, and deleting playlists
 
 ### Current Status
 
@@ -29,7 +30,7 @@ Phase 5 is successfully completed and all implemented features are working corre
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/streamx.git
+git clone https://github.com/Mohammad-Roohullah/StreamX.git
 
 # Install dependencies
 npm install
