@@ -6,38 +6,22 @@ A modern video streaming platform built with scalability, clean architecture, an
 
 > **Status:** 🚧 Currently in Development
 
-## Phase 4 Progress Update
+## Phase 5 Progress Update
 
-#### 💬 Tweet Module
-Implemented tweet management functionality, including:
+#### 📂 Playlist Module
+Implemented playlist management functionality, including:
 
-- 📝 Create a new tweet
-- 👤 Fetch all tweets by a specific user
-- ✏️ Update an existing tweet
-- 🗑️ Delete a tweet
-- 🛡️ Ownership validation for updating and deleting tweets
-
-#### 💭 Comment Module
-Added video comment functionality, including:
-
-- 💬 Add comments to videos
-- 📄 Fetch paginated comments for a video
-- ✏️ Update existing comments
-- 🗑️ Delete comments
-- ❤️ Return like count and liked status for each comment
-- 👤 Populate comment owner details
-
-#### ❤️ Like Module
-Implemented the like system, including:
-
-- 👍 Like/Unlike videos
-- 💬 Like/Unlike comments
-- 📝 Like/Unlike tweets
-- 📺 Fetch all videos liked by the user
+- 📁 Create a new playlist
+- 📋 Fetch all playlists of the logged-in user
+- 🔍 Fetch a playlist by ID
+- ➕ Add videos to a playlist
+- ➖ Remove videos from a playlist
+- ✏️ Update playlist name and description
+- 🗑️ Delete a playlist
 
 ### Current Status
 
-Phase 4 is successfully completed and all implemented features are working correctly
+Phase 5 is successfully completed and all implemented features are working correctly
 
 ---
 
