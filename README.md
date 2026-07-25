@@ -6,23 +6,19 @@ A modern video streaming platform built with scalability, clean architecture, an
 
 > **Status:** 🚧 Currently in Development
 
-## Phase 5 Progress Update
+## Phase 6 Progress Update
 
-#### 📂 Playlist Module
-Implemented playlist management functionality, including:
+#### 🔔 Subscription Module
+Implemented channel subscription functionality, including:
 
-- 📁 Create a new playlist
-- 📋 Fetch all playlists of the logged-in user
-- 🔍 Fetch a playlist by ID
-- ➕ Add videos to a playlist
-- ➖ Remove videos from a playlist
-- ✏️ Update playlist name and description
-- 🗑️ Delete a playlist
-- 🛡️ Ownership validation for viewing, updating, and deleting playlists
+- 🔄 Subscribe/Unsubscribe to channels
+- 👥 Fetch all subscribers of a channel
+- 📺 Fetch all channels a user has subscribed to
+- 🚫 Prevent users from subscribing to their own channel
 
 ### Current Status
 
-Phase 5 is successfully completed and all implemented features are working correctly
+Phase 6 is successfully completed and all implemented features are working correctly
 
 ---
 
@@ -38,6 +34,14 @@ npm install
 # Start the development server
 npm run dev
 ```
+
+---
+
+## 📬 API Testing
+
+A complete **Postman Collection** is included in the repository, making it easy to test every implemented API endpoint manually.
+
+Simply import the collection into Postman and configure the required environment variables (such as your base URL and authentication token) to get started.
 
 ---
 

@@ -717,6 +717,87 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "Subscription",
+      "item": [
+        {
+          "name": "get subscriber of a channel",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTVjNDAwYzJlNWMzOTJmZTRmOGQ4NjgiLCJlbWFpbCI6ImFsaUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImFsaSIsImlhdCI6MTc4NDQzMDc5NywiZXhwIjoxNzg0NTE3MTk3fQ.gSNevo5z4myPAF8w_pZ9HsCc39mKoEkY0-iXMYDUV1w",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"manqabats\",\r\n  \"description\": \"mir bhai, nadeem bhai etc\" \r\n}"
+            },
+            "url": {
+              "raw": "{{url}}/api/v1/subscriptions/c/6a575fa8223b2ccfc376c99a",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "subscriptions",
+                "c",
+                "6a575fa8223b2ccfc376c99a"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "toggle subscription of a channel",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/api/v1/subscriptions/c/6a575fa8223b2ccfc376c99a",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "subscriptions",
+                "c",
+                "6a575fa8223b2ccfc376c99a"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get subscribed channel done by me",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/api/v1/subscriptions/u/6a5c400c2e5c392fe4f8d868",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "subscriptions",
+                "u",
+                "6a5c400c2e5c392fe4f8d868"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     }
   ]
 }
