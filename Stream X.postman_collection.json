@@ -865,6 +865,93 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "Search, pagination and etc",
+      "item": [
+        {
+          "name": "get all videos with search",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/api/v1/videos/?page=2&limit=10&query=abondoned&sortBy=views&sortType=desc",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "videos",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "query",
+                  "value": "abondoned"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "views"
+                },
+                {
+                  "key": "sortType",
+                  "value": "desc"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get video by id inc views",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/api/v1/videos/6a5763656331f3208e1e80cb",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "videos",
+                "6a5763656331f3208e1e80cb"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get video by id put it in history",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/api/v1/users/history",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "history"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     }
   ]
 }

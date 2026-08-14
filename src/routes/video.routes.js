@@ -7,18 +7,21 @@ import {
   updateVideo,
   deleteVideo,
   togglePublishStatus,
+  getAllVideos
 } from "../controllers/video.controller.js";
 
 const router = Router();
 router.use(verifyJWT); // all video routes require login for now
 
 router.route("/").post(
-  upload.fields([
-    { name: "videoFile", maxCount: 1 },
-    { name: "thumbnail", maxCount: 1 },
-  ]),
-  publishAVideo
-);
+                    upload.fields([
+                      { name: "videoFile", maxCount: 1 },
+                      { name: "thumbnail", maxCount: 1 },
+                    ]),
+                    publishAVideo
+                  )
+                .get(getAllVideos);
+
 
 router.route("/:videoId")
         .get(getVideoById)

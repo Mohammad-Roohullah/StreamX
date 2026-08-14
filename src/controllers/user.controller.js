@@ -171,11 +171,22 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, channel[0], "Channel profile fetched successfully"));
   });
 
+const getWatchHistory = asyncHandler(async (req, res) => {
+    
+    const user = await User.findById(req.user._id).populate({
+      path: "watchHistory",
+      populate: { path: "owner", select: "username fullName avatar" },
+    });
+
+    return res.status(200).json(new ApiResponse(200, user.watchHistory, "Watch history fetched successfully"));
+});
+
 export {
   getCurrentUser,
   updateAccountDetails,
   changeCurrentPassword,
   updateUserAvatar,
   updateUserCoverImage,
-  getUserChannelProfile
+  getUserChannelProfile,
+  getWatchHistory
 };

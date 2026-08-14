@@ -6,22 +6,24 @@ A modern video streaming platform built with scalability, clean architecture, an
 
 > **Status:** 🚧 Currently in Development
 
-## Phase 7 Progress Update
+## Phase 8 Progress Update
 
-#### 📊 User Dashboard Module
-Implemented the user dashboard functionality, including:
+#### 📺 Video Discovery & Watch History Module
+Implemented video discovery and watch history functionality, including:
 
-- 📈 Fetch channel statistics
-- 👥 View total subscribers
-- 🎬 View total uploaded videos
-- 👀 View total video views
-- ❤️ View total likes across all videos
-- 📺 Fetch all videos uploaded by the channel
-- 🕒 Display channel videos sorted by newest first
+- 📺 Fetch all published videos
+- 🔍 Search videos by title and description
+- 📄 Paginate video results
+- 🔃 Sort videos by different fields in ascending or descending order
+- 👤 Filter videos by channel/user
+- 👀 Increment video view count when a video is watched
+- 🕒 Track logged-in user's watch history
+- 🚫 Prevent duplicate videos in watch history
+- 📜 Fetch user's complete watch history
 
 ### Current Status
 
-Phase 7 is successfully completed and all implemented features are working correctly
+Phase 8 is successfully completed and all implemented features are working correctly
 
 ---
 

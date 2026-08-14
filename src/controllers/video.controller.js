@@ -1,6 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import {User} from "../models/user.model.js";
 import Video from "../models/video.model.js";
 import { uploadFileOnCloudinary, deleteFileFromCloudinary } from "../utils/cloudinary.js";
 
@@ -57,6 +58,14 @@ const getVideoById = asyncHandler(async (req, res) => {
     if (!video) {
         throw new ApiError(404, "Video not found");
     }
+
+    // increment view count
+    await Video.findByIdAndUpdate(videoId, { $inc: { views: 1 } });
+
+    // add to logged-in user's watch history — $addToSet avoids duplicate entries
+    await User.findByIdAndUpdate(req.user._id, {
+        $addToSet: { watchHistory: videoId },
+    });
 
     return res
         .status(200)
@@ -147,10 +156,66 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, video, `Video is now ${video.isPublished ? "published" : "unpublished"}`));
 });
 
+const getAllVideos = asyncHandler(async (req, res) => {
+    
+    const { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query;
+
+    const matchStage = { isPublished: true };
+
+    if (query) {
+        matchStage.$text = { $search: query };
+    }
+
+    if (userId) {
+        matchStage.owner = new mongoose.Types.ObjectId(userId);
+    }
+
+    const sortStage = {};
+    if (sortBy) {
+        sortStage[sortBy] = sortType === "asc" ? 1 : -1;
+    } else {
+        sortStage.createdAt = -1; // default: newest first
+    }
+
+    const videosAggregate = Video.aggregate([
+        { $match: matchStage },
+        {
+        $lookup: {
+            from: "users",
+            localField: "owner",
+            foreignField: "_id",
+            as: "owner",
+        },
+        },
+        { $addFields: { owner: { $first: "$owner" } } },
+        { $sort: sortStage },
+        {
+        $project: {
+            title: 1,
+            thumbnail: 1,
+            duration: 1,
+            views: 1,
+            createdAt: 1,
+            owner: { username: 1, fullName: 1, avatar: 1 },
+        },
+        },
+    ]);
+
+    const options = {
+        page: parseInt(page, 10),
+        limit: parseInt(limit, 10),
+    };
+
+    const videos = await Video.aggregatePaginate(videosAggregate, options);
+
+    return res.status(200).json(new ApiResponse(200, videos, "Videos fetched successfully"));
+});
+
 export {
   publishAVideo,
   getVideoById,
   updateVideo,
   deleteVideo,
   togglePublishStatus,
+  getAllVideos
 };

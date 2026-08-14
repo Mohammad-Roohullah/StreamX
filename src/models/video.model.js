@@ -39,6 +39,11 @@ const videoSchema = new mongoose.Schema({
 
 videoSchema.plugin(mongooseAggreagePaginate);
 
+// Text index for searching videos by title and description
+videoSchema.index({
+    title: "text",
+    description: "text"
+});
 
 const Video = mongoose.model("Video", videoSchema);
 export default Video;
