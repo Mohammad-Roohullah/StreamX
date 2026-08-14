@@ -5,6 +5,8 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import Comment from "../models/comment.model.js";
 import Video from "../models/video.model.js";
 
+import { sanitizeInput } from "../utils/sanitize.js";
+
 const addComment = asyncHandler(async (req, res) => {
     
     const { videoId } = req.params;
@@ -20,7 +22,7 @@ const addComment = asyncHandler(async (req, res) => {
     }
 
     const comment = await Comment.create({
-        content,
+        content: sanitizeInput(content),
         video: videoId,
         owner: req.user._id,
     });

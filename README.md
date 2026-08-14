@@ -6,24 +6,24 @@ A modern video streaming platform built with scalability, clean architecture, an
 
 > **Status:** 🚧 Currently in Development
 
-## Phase 8 Progress Update
+## Phase 9 Progress Update
 
-#### 📺 Video Discovery & Watch History Module
-Implemented video discovery and watch history functionality, including:
+#### 🔐 Security & Input Validation Module
+Implemented security enhancements and request validation to improve the application's protection against common web vulnerabilities and malicious input, including:
 
-- 📺 Fetch all published videos
-- 🔍 Search videos by title and description
-- 📄 Paginate video results
-- 🔃 Sort videos by different fields in ascending or descending order
-- 👤 Filter videos by channel/user
-- 👀 Increment video view count when a video is watched
-- 🕒 Track logged-in user's watch history
-- 🚫 Prevent duplicate videos in watch history
-- 📜 Fetch user's complete watch history
+- 🛡️ Added `Helmet` for security-focused HTTP response headers
+- 🚦 Added `express-rate-limit` for API rate limiting and brute-force protection
+- 🔐 Added dedicated authentication rate limiting with a limit of 10 attempts per 15 minutes
+- 🚫 Added general API rate limiting with a limit of 200 requests per 15 minutes
+- 🧹 Added `express-mongo-sanitize` to help prevent MongoDB injection attacks
+- ✅ Added `Zod` for schema-based request validation
+- 🧼 Added reusable validation middleware for consistent request validation and error handling
+- 🔑 Added validation schemas for user registration and login
+- 🛡️ Added `sanitize-html` utility for removing unwanted HTML from user-provided content
 
 ### Current Status
 
-Phase 8 is successfully completed and all implemented features are working correctly
+Phase 9 is successfully completed and all implemented features are working correctly
 
 ---
 

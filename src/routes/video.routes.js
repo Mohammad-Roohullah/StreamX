@@ -1,6 +1,10 @@
 import { Router } from "express";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import upload from "../middlewares/multer.middleware.js";
+
+import { validate } from "../middlewares/validate.middleware.js";
+import { publishVideoSchema, updateVideoSchema } from "../validators/video.validator.js";
+
 import {
   publishAVideo,
   getVideoById,
@@ -18,6 +22,7 @@ router.route("/").post(
                       { name: "videoFile", maxCount: 1 },
                       { name: "thumbnail", maxCount: 1 },
                     ]),
+                    validate(publishVideoSchema),
                     publishAVideo
                   )
                 .get(getAllVideos);
