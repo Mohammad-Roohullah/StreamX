@@ -6,19 +6,22 @@ A modern video streaming platform built with scalability, clean architecture, an
 
 > **Status:** 🚧 Currently in Development
 
-## Phase 6 Progress Update
+## Phase 7 Progress Update
 
-#### 🔔 Subscription Module
-Implemented channel subscription functionality, including:
+#### 📊 User Dashboard Module
+Implemented the user dashboard functionality, including:
 
-- 🔄 Subscribe/Unsubscribe to channels
-- 👥 Fetch all subscribers of a channel
-- 📺 Fetch all channels a user has subscribed to
-- 🚫 Prevent users from subscribing to their own channel
+- 📈 Fetch channel statistics
+- 👥 View total subscribers
+- 🎬 View total uploaded videos
+- 👀 View total video views
+- ❤️ View total likes across all videos
+- 📺 Fetch all videos uploaded by the channel
+- 🕒 Display channel videos sorted by newest first
 
 ### Current Status
 
-Phase 6 is successfully completed and all implemented features are working correctly
+Phase 7 is successfully completed and all implemented features are working correctly
 
 ---
 
