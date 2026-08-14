@@ -79,7 +79,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    // \"username\": \"test\",\r\n    // \"email\": \"test@gmail.com\",\r\n    // \"password\": \"123\"\r\n    \"username\": \"ali\",\r\n    \"email\": \"ali@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
+              "raw": "{\r\n    \"username\": \"test\",\r\n    \"email\": \"test@gmail.com\",\r\n    \"password\": \"123\"\r\n    // \"username\": \"ali\",\r\n    // \"email\": \"ali@gmail.com\",\r\n    // \"password\": \"123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -164,7 +164,29 @@
     },
     {
       "name": "User",
-      "item": []
+      "item": [
+        {
+          "name": "get user profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/api/v1/users/c/test",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "c",
+                "test"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     },
     {
       "name": "Videos",
@@ -792,6 +814,51 @@
                 "subscriptions",
                 "u",
                 "6a5c400c2e5c392fe4f8d868"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Dashbaord",
+      "item": [
+        {
+          "name": "get channel stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/api/v1/dashboard/stats",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "dashboard",
+                "stats"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get channel videos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/api/v1/dashboard/videos",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "dashboard",
+                "videos"
               ]
             }
           },

@@ -7,6 +7,7 @@ import {
   changeCurrentPassword,
   updateUserAvatar,
   updateUserCoverImage,
+  getUserChannelProfile
 } from "../controllers/user.controller.js";
 
 const router = Router();
@@ -17,5 +18,6 @@ router.route("/update-account").patch(updateAccountDetails);
 router.route("/change-password").patch(changeCurrentPassword);
 router.route("/avatar").patch(upload.single("avatar"), updateUserAvatar);
 router.route("/cover-image").patch(upload.single("coverImage"), updateUserCoverImage);
+router.route("/c/:username").get(getUserChannelProfile);
 
 export default router;
