@@ -6,6 +6,10 @@ import { uploadFileOnCloudinary } from "../utils/cloudinary.js";
 import { options } from "../constants.js";
 import jwt from "jsonwebtoken";
 
+import bcrypt from "bcrypt";
+import { sendEmail } from "../utils/sendEmail.js";
+import { setCache, getCache, deleteCache } from "../utils/redisCache.js";
+
 const generateAccessAndRefreshToken = async (userId) => {
     
     try {
@@ -158,4 +162,91 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     }
 });
 
-export { register, login, logout, refreshAccessToken };
+const forgotPassword = asyncHandler(async (req, res) => {
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+
+    // Always respond the same way, regardless of whether the user exists —
+    // prevents attackers from using this endpoint to enumerate valid emails.
+    const genericResponse = new ApiResponse(
+        200,
+        {},
+        "If that email is registered, a reset code has been sent"
+    );
+
+    if (!user) {
+        return res.status(200).json(genericResponse);
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit numeric
+    const hashedOtp = await bcrypt.hash(otp, 10);
+
+    await setCache(`otp:reset:${user._id}`, hashedOtp, 600); // 10 min TTL
+
+    await sendEmail({
+        to: user.email,
+        subject: "Your password reset code",
+        html: `<p>Your password reset code is <b>${otp}</b>. It expires in 10 minutes.</p>`,
+    });
+
+    return res.status(200).json(genericResponse);
+});
+
+const verifyResetOtp = asyncHandler(async (req, res) => {
+    const { email, otp } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+        throw new ApiError(400, "Invalid or expired code");
+    }
+
+    const storedHashedOtp = await getCache(`otp:reset:${user._id}`);
+    if (!storedHashedOtp) {
+        throw new ApiError(400, "Invalid or expired code");
+    }
+
+    const isOtpValid = await bcrypt.compare(otp, storedHashedOtp);
+    if (!isOtpValid) {
+        throw new ApiError(400, "Invalid or expired code");
+    }
+
+    // OTP confirmed — issue a short-lived, single-purpose reset token
+    const resetToken = jwt.sign(
+        { userId: user._id },
+        process.env.RESET_TOKEN_SECRET,
+        { expiresIn: "10m" }
+    );
+
+    await deleteCache(`otp:reset:${user._id}`); // one-time use
+
+    return res.status(200).json(new ApiResponse(200, { resetToken }, "Code verified"));
+});
+
+const resetPassword = asyncHandler(async (req, res) => {
+    const { resetToken, newPassword } = req.body;
+
+    if (!resetToken || !newPassword) {
+        throw new ApiError(400, "Reset token and new password are required");
+    }
+
+    let decoded;
+    try {
+        decoded = jwt.verify(resetToken, process.env.RESET_TOKEN_SECRET);
+    } catch (error) {
+        throw new ApiError(400, "Invalid or expired reset token");
+    }
+
+    const user = await User.findById(decoded.userId);
+    if (!user) {
+        throw new ApiError(400, "Invalid or expired reset token");
+    }
+
+    user.password = newPassword; // pre-save hook re-hashes
+    user.refreshToken = undefined; // invalidate existing sessions everywhere
+    await user.save();
+
+    return res.status(200).json(new ApiResponse(200, {}, "Password reset successfully. Please log in again."));
+});
+
+export { register, login, logout, refreshAccessToken, forgotPassword, verifyResetOtp, resetPassword };

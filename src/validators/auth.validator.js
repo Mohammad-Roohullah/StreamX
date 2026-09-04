@@ -15,4 +15,18 @@ const loginSchema = z.object({
   message: "Username or email is required",
 });
 
-export { registerSchema, loginSchema };
+const forgotPasswordSchema = z.object({
+  email: z.string().trim().toLowerCase().email("Invalid email address"),
+});
+
+const verifyOtpSchema = z.object({
+  email: z.string().trim().toLowerCase().email("Invalid email address"),
+  otp: z.string().length(6, "Code must be 6 digits"),
+});
+
+const resetPasswordSchema = z.object({
+  resetToken: z.string().min(1, "Reset token is required"),
+  newPassword: z.string().min(8, "Password must be at least 8 characters"),
+});
+
+export { registerSchema, loginSchema, forgotPasswordSchema, verifyOtpSchema, resetPasswordSchema };

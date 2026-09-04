@@ -5,6 +5,9 @@ import {User} from "../models/user.model.js";
 import Video from "../models/video.model.js";
 import { uploadFileOnCloudinary, deleteFileFromCloudinary } from "../utils/cloudinary.js";
 
+import { deleteCache, setIfNotExists  } from "../utils/redisCache.js";
+import redisClient from "../db/redis.js";
+
 const publishAVideo = asyncHandler(async (req, res) => {
    
     const { title, description } = req.body;
@@ -42,34 +45,40 @@ const publishAVideo = asyncHandler(async (req, res) => {
         owner: req.user._id,
     });
 
+    // redis delete the invalidated cache of video list
+    await deleteCache(`channel:profile:${req.user.username}`);
+    await deleteCache(`dashboard:stats:${req.user._id}`);
+
     return res.status(201).json(new ApiResponse(201, video, "Video published successfully"));
 });
 
-
 const getVideoById = asyncHandler(async (req, res) => {
-    
+
     const { videoId } = req.params;
 
-    const video = await Video.findById(videoId).populate(
-        "owner",
-        "username fullName avatar"
-    );
-
+    const video = await Video.findById(videoId).populate("owner", "username fullName avatar");
     if (!video) {
         throw new ApiError(404, "Video not found");
     }
 
-    // increment view count
-    await Video.findByIdAndUpdate(videoId, { $inc: { views: 1 } });
+    const debounceKey = `view:debounce:${req.user._id}:${videoId}`;
+    const shouldCountView = await setIfNotExists(debounceKey, 1800);
 
-    // add to logged-in user's watch history — $addToSet avoids duplicate entries
+    // SET key value NX EX ttl -> atomic "set only if it doesn't already exist"
+    // returns "OK" if it was set (i.e., this is a fresh view), null if it already existed
+
+    // if Redis goes down, setIfNotExists returns true on error, meaning we skip debounce protection entirely and just increment on every view during the outage. ("fail-open" decision)
+
+    if (shouldCountView) {
+        await Video.findByIdAndUpdate(videoId, { $inc: { views: 1 } });
+        await deleteCache(`dashboard:stats:${video.owner._id}`);
+    }
+
     await User.findByIdAndUpdate(req.user._id, {
         $addToSet: { watchHistory: videoId },
     });
 
-    return res
-        .status(200)
-        .json(new ApiResponse(200, video, "Video fetched successfully"));
+    return res.status(200).json(new ApiResponse(200, video, "Video fetched successfully"));
 });
 
 
@@ -127,6 +136,10 @@ const deleteVideo = asyncHandler(async (req, res) => {
     await deleteFileFromCloudinary(video.videoFile);
     await deleteFileFromCloudinary(video.thumbnail);
     await video.deleteOne();
+
+    // redis delete the invalidated cache of video list
+    await deleteCache(`channel:profile:${req.user.username}`);
+    await deleteCache(`dashboard:stats:${req.user._id}`);
 
     return res
         .status(200)

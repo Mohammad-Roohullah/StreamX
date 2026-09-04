@@ -8,18 +8,28 @@ A modern video streaming platform built with scalability, clean architecture, an
 
 ## Phase 9 Progress Update
 
-#### 🔐 Security & Input Validation Module
-Implemented security enhancements and request validation to improve the application's protection against common web vulnerabilities and malicious input, including:
+#### ⚡ Redis, Caching & Security Module
 
-- 🛡️ Added `Helmet` for security-focused HTTP response headers
-- 🚦 Added `express-rate-limit` for API rate limiting and brute-force protection
-- 🔐 Added dedicated authentication rate limiting with a limit of 10 attempts per 15 minutes
+Implemented Redis-powered performance optimizations, temporary data storage, rate limiting, and password recovery features to improve the application's scalability, security, and overall backend reliability, including:
+
+- ⚡ Added `Redis` with `ioredis` for fast, centralized temporary data storage
+- 🗄️ Added reusable Redis cache utilities for getting, setting, and deleting cached data with TTL support
+- 📦 Added Redis caching for channel profile and dashboard/channel data to reduce repeated MongoDB aggregation queries
+- 🧹 Added cache invalidation when channel profiles, videos, subscriptions, and dashboard statistics are modified
+- 👁️ Added Redis-based video view debouncing using atomic `SET NX EX` operations to prevent repeated views within a 30-minute window
+- 🛡️ Added Redis-backed `express-rate-limit` using `rate-limit-redis` for distributed request limiting
+- 🔐 Added dedicated authentication rate limiting with a limit of 10 requests per 15 minutes
 - 🚫 Added general API rate limiting with a limit of 200 requests per 15 minutes
-- 🧹 Added `express-mongo-sanitize` to help prevent MongoDB injection attacks
-- ✅ Added `Zod` for schema-based request validation
-- 🧼 Added reusable validation middleware for consistent request validation and error handling
-- 🔑 Added validation schemas for user registration and login
-- 🛡️ Added `sanitize-html` utility for removing unwanted HTML from user-provided content
+- 🔑 Added dedicated password-reset rate limiting with a limit of 3 requests per 15 minutes
+- 🔐 Added forgot-password functionality using OTP verification
+- ⏳ Added Redis-based OTP storage with a 10-minute expiration
+- 🔒 Added bcrypt hashing for password-reset OTPs before storing them in Redis
+- 📧 Added Nodemailer with Ethereal for development email delivery and OTP testing
+- 🛡️ Added protection against email/account enumeration by returning generic password-reset responses
+- 🎟️ Added short-lived JWT reset tokens after successful OTP verification
+- ♻️ Added one-time OTP invalidation after successful verification
+- 🔐 Added password reset functionality with existing session invalidation through refresh-token removal
+- 🧯 Added Redis failure handling for cache operations so normal application requests can fall back to MongoDB when caching fails
 
 ### Current Status
 

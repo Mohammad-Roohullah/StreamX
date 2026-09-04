@@ -1,4 +1,5 @@
 import "./env.js";
+import "./db/redis.js"; 
 import connectDB from "./db/connect.js";
 import { app } from "./app.js";
 

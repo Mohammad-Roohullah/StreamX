@@ -2,7 +2,10 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
+import Subscription from "../models/subscription.model.js";
 import { uploadFileOnCloudinary, deleteFileFromCloudinary } from "../utils/cloudinary.js";
+
+import { getCache, setCache, deleteCache } from "../utils/redisCache.js";
 
 const getCurrentUser = asyncHandler(async (req, res) => {
     // verifyJWT already attached req.user, no DB call needed
@@ -27,6 +30,9 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
       { $set: updateFields },
       { new: true } // return the updated document, not the pre-update one
     ).select("-password -refreshToken");
+
+    // redis delete the invalidated cache
+    await deleteCache(`channel:profile:${user.username}`); 
 
     return res.status(200).json(new ApiResponse(200, user, "Account details updated"));
 });
@@ -73,6 +79,9 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
       await deleteFileFromCloudinary(oldAvatarUrl); // clean up only after new one is confirmed saved
     }
 
+    // redis delete the invalidated cache
+    await deleteCache(`channel:profile:${user.username}`); 
+
     return res.status(200).json(new ApiResponse(200, user, "Avatar updated successfully"));
 });
 
@@ -100,6 +109,9 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
       await deleteFileFromCloudinary(oldCoverImageUrl);
     }
 
+    // redis delete the invalidated cache
+    await deleteCache(`channel:profile:${user.username}`); 
+
     return res.status(200).json(new ApiResponse(200, user, "Cover image updated successfully"));
 });
 
@@ -111,65 +123,74 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
       throw new ApiError(400, "Username is required");
     }
 
-    const channel = await User.aggregate([
-      // stage 1: find the channel (user) by username
-      {
-        $match: { username: username.toLowerCase() },
-      },
-      // stage 2: join subscriptions where this user is the "channel" -> gives subscribers
-      {
-        $lookup: {
-          from: "subscriptions",
-          localField: "_id",
-          foreignField: "channel",
-          as: "subscribers",
-        },
-      },
-      // stage 3: join subscriptions where this user is the "subscriber" -> gives who they follow
-      {
-        $lookup: {
-          from: "subscriptions",
-          localField: "_id",
-          foreignField: "subscriber",
-          as: "subscribedTo",
-        },
-      },
-      // stage 4: compute counts + whether the logged-in viewer is subscribed
-      {
-        $addFields: {
-          subscribersCount: { $size: "$subscribers" },
-          channelsSubscribedToCount: { $size: "$subscribedTo" },
-          isSubscribed: {
-            $cond: {
-              if: { $in: [req.user?._id, "$subscribers.subscriber"] },
-              then: true,
-              else: false,
-            },
+    const cacheKey = `channel:profile:${username.toLowerCase()}`;
+    let channelData = await getCache(cacheKey);
+
+    if (!channelData) {
+      const channel = await User.aggregate([
+        { $match: { username: username.toLowerCase() } },
+        {
+          $lookup: {
+            from: "subscriptions",
+            localField: "_id",
+            foreignField: "channel",
+            as: "subscribers",
           },
         },
-      },
-      // stage 5: shape the response — never leak password/refreshToken
-      {
-        $project: {
-          username: 1,
-          fullName: 1,
-          email: 1,
-          avatar: 1,
-          coverImage: 1,
-          subscribersCount: 1,
-          channelsSubscribedToCount: 1,
-          isSubscribed: 1,
-          createdAt: 1,
+        {
+          $lookup: {
+            from: "subscriptions",
+            localField: "_id",
+            foreignField: "subscriber",
+            as: "subscribedTo",
+          },
         },
-      },
-    ]);
+        {
+          $addFields: {
+            subscribersCount: { $size: "$subscribers" },
+            channelsSubscribedToCount: { $size: "$subscribedTo" },
+          },
+        },
+        {
+          $project: {
+            username: 1,
+            fullName: 1,
+            email: 1,
+            avatar: 1,
+            coverImage: 1,
+            subscribersCount: 1,
+            channelsSubscribedToCount: 1,
+            createdAt: 1,
+            // isSubscribed removed — this pipeline result is now viewer-independent
+          },
+        },
+      ]);
 
-    if (!channel?.length) {
-      throw new ApiError(404, "Channel does not exist");
+      if (!channel?.length) {
+        throw new ApiError(404, "Channel does not exist");
+      }
+
+      channelData = channel[0];
+      await setCache(cacheKey, channelData, 60);
     }
 
-    return res.status(200).json(new ApiResponse(200, channel[0], "Channel profile fetched successfully"));
-  });
+    // Viewer-specific — computed fresh on every request, never cached.
+    // This is a single indexed lookup, effectively O(1), so there's no real cost to skipping the cache here.
+    const isSubscribed = await Subscription.exists({
+      subscriber: req.user._id,
+      channel: channelData._id,
+    });
+
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          { ...channelData, isSubscribed: Boolean(isSubscribed) },
+          "Channel profile fetched successfully"
+        )
+      );
+});
 
 const getWatchHistory = asyncHandler(async (req, res) => {
     

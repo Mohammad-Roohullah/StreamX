@@ -4,6 +4,8 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import Subscription from "../models/subscription.model.js";
 
+import { deleteCache } from "../utils/redisCache.js";
+
 const toggleSubscription = asyncHandler(async (req, res) => {
   const { channelId } = req.params;
 
@@ -18,6 +20,12 @@ const toggleSubscription = asyncHandler(async (req, res) => {
 
   if (existingSubscription) {
     await existingSubscription.deleteOne();
+
+    // after creating/deleting the subscription doc, fetch the channel's username once:
+    const channel = await User.findById(channelId).select("username");
+    await deleteCache(`channel:profile:${channel.username}`);
+    await deleteCache(`dashboard:stats:${channelId}`);
+
     return res.status(200).json(new ApiResponse(200, { subscribed: false }, "Unsubscribed"));
   }
 
@@ -25,6 +33,11 @@ const toggleSubscription = asyncHandler(async (req, res) => {
     subscriber: req.user._id,
     channel: channelId,
   });
+
+  // after creating/deleting the subscription doc, fetch the channel's username once:
+  const channel = await User.findById(channelId).select("username");
+  await deleteCache(`channel:profile:${channel.username}`);
+  await deleteCache(`dashboard:stats:${channelId}`);
 
   return res.status(200).json(new ApiResponse(200, { subscribed: true }, "Subscribed"));
 });
